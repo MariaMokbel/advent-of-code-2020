@@ -47,7 +47,7 @@ def check_pid_correct(potential_pid: str) -> bool:
     return True if re.search(r'^[0-9]{9}$', potential_pid) else False
 
 
-MANDATORY_KEYS = {'byr': check_byr_correct,
+MANDATORY_FIELDS_CHECKS = {'byr': check_byr_correct,
                   'iyr': check_iyr_correct,
                   'eyr': check_eyr_correct,
                   'hgt': check_hgt_correct,
@@ -78,12 +78,11 @@ def get_documents(file_content: List[str]) -> List[str]:
     return documents
 
 
-def count_passports(passports: List[str]) -> int:
+def count_passports(documents: List[str]) -> int:
     count = 0
-    for passport in passports:
-        keys = [el.split(':')[0] for el in passport.split()]
-
-        if set(MANDATORY_KEYS.keys()).issubset(set(keys)):
+    for doc in documents:
+        keys = [el.split(':')[0] for el in doc.split()]
+        if set(MANDATORY_FIELDS_CHECKS.keys()).issubset(set(keys)):
             count += 1
     return count
 
@@ -94,12 +93,12 @@ def count_valid_passports(passports: List[str]) -> int:
         keys = [el.split(':')[0] for el in passport.split()]
         values = [el.split(':')[1] for el in passport.split()]
 
-        if set(MANDATORY_KEYS.keys()).issubset(set(keys)):
+        if set(MANDATORY_FIELDS_CHECKS.keys()).issubset(set(keys)):
             is_valid = True
             for index in range(len(values)):
                 if keys[index] == 'cid':
                     continue
-                if not MANDATORY_KEYS[keys[index]](values[index]):
+                if not MANDATORY_FIELDS_CHECKS[keys[index]](values[index]):
                     is_valid = False
                     break
             if is_valid:
