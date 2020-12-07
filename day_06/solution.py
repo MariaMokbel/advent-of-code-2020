@@ -11,23 +11,23 @@ def parse_input(filename: str) -> List[str]:
 
 
 def get_groups(file_content: List[str]) -> List[str]:
-    documents = []
+    groups = []
     concat = ''
     for el in file_content:
         if el == '':
-            documents.append(concat)
+            groups.append(concat)
             concat = ''
             continue
         concat = concat + el + ' '
-    documents.append(concat)
-    return documents
+    groups.append(concat)
+    return groups
 
 
 def count_yes_questions(groups: List[str]) -> int:
     return reduce(lambda a, b: a + b, [len(set(questions.replace(' ', ''))) for questions in groups])
 
 
-def count_all_yes_questions(groups: List[str]):
+def count_all_yes_questions(groups: List[str]) -> int:
     all_yes_questions = 0
     for group in groups:
         questions = []
