@@ -57,7 +57,7 @@ def construct_tree(bags_data: Dict, node: Node or Tree) -> Node or Tree:
     for bag_color, bags in bags_data.items():
         if bag_color == node.data.bag_type:
             for bag in bags:
-                new_bag_data = BagData(bag.bag_type, bag.number)
+                new_bag_data = BagData(bag.bag_type, bag.invalid_number)
                 node.add_node(construct_tree(bags_data, Node(new_bag_data)))
     return node
 
@@ -65,11 +65,11 @@ def construct_tree(bags_data: Dict, node: Node or Tree) -> Node or Tree:
 def dfs(node: Tree or Node, visited: List, multiplier: int, count: List):
     if node not in visited:
         visited.append(node)
-        count.append(multiplier * node.data.number)
+        count.append(multiplier * node.data.invalid_number)
         if len(node.children) == 0:
             multiplier = 1
         else:
-            multiplier = multiplier * node.data.number
+            multiplier = multiplier * node.data.invalid_number
         for child in node.children:
             dfs(child, visited, multiplier, count)
 
