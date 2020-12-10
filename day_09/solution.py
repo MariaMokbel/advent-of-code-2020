@@ -42,4 +42,5 @@ if __name__ == "__main__":
     invalid_number = find_first_invalid_number(content)
     print("Solution 1:", invalid_number)
     contiguous_set = find_contiguous_set(content, invalid_number)
+    print(contiguous_set)
     print("Solution 2:", max(contiguous_set) + min(contiguous_set))
